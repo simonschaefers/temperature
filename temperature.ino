@@ -3,8 +3,8 @@
 # include <SPI.h>
 # include <RTClib.h>
 # include <OneWire.h>
-
-#define 
+# include "commands_and_variables.h"
+ 
 RTC_DS1307 rtc;
 
 OneWire ow(4);
@@ -22,8 +22,6 @@ void setup() {
       Serial.println("ERROR SD module initialization failed or card is not present");
     }   
     else {Serial.println("SD Working");}
-    
- 
 }
 
 void loop() {
