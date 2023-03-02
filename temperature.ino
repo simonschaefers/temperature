@@ -7,10 +7,14 @@
 const String logfile = "tsensor.log";
 RTC_DS1307 rtc;
 OneWire ow(4);
+int old_time = 0;
 
 void setup() {
   Serial.begin(9600);
-    
+  pinMode(5,OUTPUT);
+  pinMode(6,OUTPUT);
+  pinMode(7,OUTPUT);
+
   if(!rtc.begin()){
     Serial.println("ERROR RTC is not running");
     rtc.adjust(DateTime(F(__DATE__),F(__TIME__)));
@@ -65,9 +69,35 @@ void loop() {
   // Write data to file and terminal
   printOutput(getISOtime());
   printOutput(", ");
+  printOutput(String(millis()));
+  printOutput(", ");    
   printOutput(serial_number);
   printOutput(", ");
   printOutputln(String(tempCelsius));
-  
 
+  //if (old_time-millis()>1000){
+    //digitalWrite(5,LOW);    
+    //igitalWrite(6,LOW); 
+    //digitalWrite(7,LOW);    
+    /*
+    if (tempCelsius < 20.){
+      analogWrite(5,min(255,int(510.*(1.-(tempCelsius)/20.)))); 
+      analogWrite(6,min(255,int(510.*(tempCelsius)/20.))); 
+      
+    }
+    if (tempCelsius > 20.){
+      analogWrite(7,min(255,int(510.*(tempCelsius/20.-1.)))); 
+      analogWrite(6,min(255,int(510.*(2-(tempCelsius)/20.)))); 
+
+    }
+    
+    if (tempCelsius < 30. && tempCelsius > 10.){
+    //  digitalWrite(6,HIGH);  
+    //  analogWrite(6,min(255,int(510*(1-(tempCelsius)/10.)))); 
+  
+    }  
+    
+  //old_time = millis() ; 
+  //}
+    */
 }
